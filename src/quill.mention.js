@@ -1,7 +1,7 @@
 import Quill from 'quill';
 import Keys from './constants/keys';
 import './quill.mention.css';
-import './blots/mention';
+import MentionBlot from './blots/mention';
 
 const numberIsNaN = require('./imports/numberisnan.js');
 
@@ -46,6 +46,8 @@ class Mention {
       listItemClass: 'ql-mention-list-item',
       mentionContainerClass: 'ql-mention-list-container',
       mentionListClass: 'ql-mention-list',
+      mentionBlotTagName: 'span',
+      mentionBlotClassName: 'mention',
     };
 
     Object.assign(this.options, options, {
@@ -53,6 +55,11 @@ class Mention {
         ? this.options.dataAttributes.concat(options.dataAttributes)
         : this.options.dataAttributes,
     });
+
+    MentionBlot.tagName = this.options.mentionBlotTagName ? this.options.mentionBlotTagName : 'span';
+    MentionBlot.className = this.options.mentionBlotClassName ? this.options.mentionBlotClassName : '';
+
+    Quill.register(MentionBlot);
 
     this.mentionContainer = document.createElement('div');
     this.mentionContainer.className = this.options.mentionContainerClass ? this.options.mentionContainerClass : '';

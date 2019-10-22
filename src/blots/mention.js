@@ -31,4 +31,4 @@ MentionBlot.blotName = 'mention';
 MentionBlot.tagName = 'span';
 MentionBlot.className = 'mention';
 
-Quill.register(MentionBlot);
+export default MentionBlot;
