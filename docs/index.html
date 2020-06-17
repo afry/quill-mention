@@ -1,116 +1,115 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Quill Mention</title>
-    <meta name="description" content="Quill Mention Demo" />
-    <link
-      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
-      rel="stylesheet"
-    />
-    <link href="quill.mention.min.css" rel="stylesheet" />
-    <style>
-      body {
-        font-size: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-          "Segoe UI Symbol";
-        max-width: 800px;
-        margin: 0 auto;
-      }
 
-      .ql-editor {
-        border: 1px solid #a3a3a3;
-        border-radius: 6px;
-      }
+<head>
+  <meta charset="utf-8" />
+  <title>Quill Mention</title>
+  <meta name="description" content="Quill Mention Demo" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+  <link href="quill.mention.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol";
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-      .ql-editor-disabled {
-        border-radius: 6px;
-        background-color: rgba(124, 0, 0, 0.2);
-        transition-duration: 0.5s;
-      }
+    .ql-editor {
+      border: 1px solid #a3a3a3;
+      border-radius: 6px;
+    }
 
-      .ql-editor:focus {
-        border: 1px solid #025fae;
-      }
-    </style>
-  </head>
+    .ql-editor-disabled {
+      border-radius: 6px;
+      background-color: rgba(124, 0, 0, 0.2);
+      transition-duration: 0.5s;
+    }
 
-  <body>
-    <h1>Quill Mention</h1>
-    <p>
-      Quill Mention is a module to provide @mentions or #hashtag functionality
-      for the Quill rich text editor.
-    </p>
+    .ql-editor:focus {
+      border: 1px solid #025fae;
+    }
+  </style>
+</head>
 
-    <h2>Demo</h2>
-    <!-- Create the editor container -->
-    <div id="editor"></div>
+<body>
+  <h1>Quill Mention</h1>
+  <p>
+    Quill Mention is a module to provide @mentions or #hashtag functionality
+    for the Quill rich text editor.
+  </p>
 
-    <h2>License</h2>
-    <p>This project is licensed under the MIT License</p>
-    <p><a href="https://github.com/afry/quill-mention">View on GitHub</a></p>
+  <h2>Demo</h2>
+  <!-- Create the editor container -->
+  <div id="editor"></div>
 
-    <!-- Include the Quill library -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-    <script src="quill.mention.min.js"></script>
-    <!-- Initialize Quill editor -->
-    <script>
-      const atValues = [
-        { id: "515fd775-cb54-41f3-b921-56163871e2cf", value: "Mickey Dooley" },
-        {
-          id: "3f0b7933-57b8-4d9d-b238-f8af62b2e945",
-          value: "Desmond Waterstone"
-        },
-        { id: "711f68ab-ca20-4011-ab0f-d98c8fac4c05", value: "Jeralee Fryd" },
-        { id: "775e05fc-72bc-48a1-9508-5c61674734f1", value: "Eddie Hucquart" },
-        { id: "e8701885-105e-4a21-b200-98e559776655", value: "Nathalia Whear" }
-      ];
+  <h2>License</h2>
+  <p>This project is licensed under the MIT License</p>
+  <p><a href="https://github.com/afry/quill-mention">View on GitHub</a></p>
 
-      const hashValues = [
-        { id: "0075256a-19c2-4a2d-b549-627000bcc3bc", value: "Accounting" },
-        {
-          id: "91e8901b-e3bf-4158-8ddf-7f5d9e8cbb7f",
-          value: "Product Management"
-        },
-        { id: "c3373e89-7ab8-4a45-8b69-0b0cc49d89a9", value: "Marketing" },
-        { id: "fa22f1d2-16c8-4bea-b869-8acad16e187a", value: "Engineering" },
-        { id: "fe681168-f315-42f0-b78b-b1ea787fa1fd", value: "Accounting" }
-      ];
+  <!-- Include the Quill library -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+  <script src="quill.mention.min.js"></script>
+  <!-- Initialize Quill editor -->
+  <script>
+    const atValues = [
+      { id: "515fd775-cb54-41f3-b921-56163871e2cf", value: "Mickey Dooley" },
+      {
+        id: "3f0b7933-57b8-4d9d-b238-f8af62b2e945",
+        value: "Desmond Waterstone"
+      },
+      { id: "711f68ab-ca20-4011-ab0f-d98c8fac4c05", value: "Jeralee Fryd" },
+      { id: "775e05fc-72bc-48a1-9508-5c61674734f1", value: "Eddie Hucquart" },
+      { id: "e8701885-105e-4a21-b200-98e559776655", value: "Nathalia Whear" }
+    ];
 
-      var quill = new Quill("#editor", {
-        placeholder: "Start by typing @ for mentions or # for hashtags...",
-        modules: {
-          mention: {
-            allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
-            mentionDenotationChars: ["@", "#"],
-            source: function(searchTerm, renderList, mentionChar) {
-              let values;
+    const hashValues = [
+      { id: "0075256a-19c2-4a2d-b549-627000bcc3bc", value: "Accounting" },
+      {
+        id: "91e8901b-e3bf-4158-8ddf-7f5d9e8cbb7f",
+        value: "Product Management"
+      },
+      { id: "c3373e89-7ab8-4a45-8b69-0b0cc49d89a9", value: "Marketing" },
+      { id: "fa22f1d2-16c8-4bea-b869-8acad16e187a", value: "Engineering" },
+      { id: "fe681168-f315-42f0-b78b-b1ea787fa1fd", value: "Accounting" }
+    ];
 
-              if (mentionChar === "@") {
-                values = atValues;
-              } else {
-                values = hashValues;
-              }
+    var quill = new Quill("#editor", {
+      placeholder: "Start by typing @ for mentions or # for hashtags...",
+      modules: {
+        mention: {
+          allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+          mentionDenotationChars: ["@", "#"],
+          source: function (searchTerm, renderList, mentionChar) {
+            let values;
 
-              if (searchTerm.length === 0) {
-                renderList(values, searchTerm);
-              } else {
-                const matches = [];
-                for (i = 0; i < values.length; i++)
-                  if (
-                    ~values[i].value
-                      .toLowerCase()
-                      .indexOf(searchTerm.toLowerCase())
-                  )
-                    matches.push(values[i]);
-                renderList(matches, searchTerm);
-              }
+            if (mentionChar === "@") {
+              values = atValues;
+            } else {
+              values = hashValues;
+            }
+
+            if (searchTerm.length === 0) {
+              renderList(values, searchTerm);
+            } else {
+              const matches = [];
+              for (i = 0; i < values.length; i++)
+                if (
+                  ~values[i].value
+                    .toLowerCase()
+                    .indexOf(searchTerm.toLowerCase())
+                )
+                  matches.push(values[i]);
+              renderList(matches, searchTerm);
             }
           }
         }
-      });
-    </script>
-  </body>
+      }
+    });
+  </script>
+</body>
+
 </html>
