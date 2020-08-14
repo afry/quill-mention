@@ -214,13 +214,13 @@ class Mention {
 
   selectItem() {
     const data = this.getItemData();
-    this.options.onSelect(data, asyncData => {
-      this.insertItem(asyncData);
+    this.options.onSelect(data, (asyncData, blotName = this.options.blotName) => {
+      this.insertItem(asyncData, blotName);
     });
     this.hideMentionList();
   }
 
-  insertItem(data) {
+  insertItem(data, blotName = this.options.blotName) {
     const render = data;
     if (render === null) {
       return;
@@ -238,7 +238,7 @@ class Mention {
     );
     this.quill.insertEmbed(
       prevMentionCharPos,
-      this.options.blotName,
+      blotName,
       render,
       Quill.sources.USER
     );
