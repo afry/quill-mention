@@ -38,7 +38,7 @@ class Mention {
       },
       mentionDenotationChars: ["@"],
       showDenotationChar: true,
-      allowedChars: /^[a-zA-Z0-9_]*$/,
+      allowedChars: /^[A-Za-z0-9][A-Za-z0-9\s]*$/,
       minChars: 0,
       maxChars: 31,
       offsetTop: 2,
@@ -48,7 +48,14 @@ class Mention {
       positioningStrategy: "normal",
       defaultMenuOrientation: "bottom",
       blotName: "mention",
-      dataAttributes: ["id", "value", "denotationChar", "link", "target", "disabled"],
+      dataAttributes: [
+        "id",
+        "value",
+        "denotationChar",
+        "link",
+        "target",
+        "disabled",
+      ],
       linkTarget: "_blank",
       onOpen() {
         return true;
@@ -60,7 +67,7 @@ class Mention {
       listItemClass: "ql-mention-list-item",
       mentionContainerClass: "ql-mention-list-container",
       mentionListClass: "ql-mention-list",
-      spaceAfterInsert: true
+      spaceAfterInsert: true,
     };
 
     Object.assign(this.options, options, {

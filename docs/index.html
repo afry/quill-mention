@@ -101,7 +101,7 @@
         placeholder: "Start by typing @ for mentions or # for hashtags...",
         modules: {
           mention: {
-            allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+            allowedChars: /^[A-Za-z0-9][A-Za-z0-9\s]*$/,
             mentionDenotationChars: ["@", "#"],
             source: function(searchTerm, renderList, mentionChar) {
               let values;
@@ -134,7 +134,7 @@
         placeholder: "Start by typing @ for mentions",
         modules: {
           mention: {
-            allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+            allowedChars: /^[A-Za-z0-9][A-Za-z0-9\s]*$/,
             mentionDenotationChars: ["@"],
             positioningStrategy: "fixed",
             renderItem: (data) => {
