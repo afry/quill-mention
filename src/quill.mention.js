@@ -701,9 +701,15 @@ class Mention {
           mentionChar
         );
       } else {
+        if (this.existingSourceExecutionToken) {
+          this.existingSourceExecutionToken.abandoned = true;
+        }
         this.hideMentionList();
       }
     } else {
+      if (this.existingSourceExecutionToken) {
+        this.existingSourceExecutionToken.abandoned = true;
+      }
       this.hideMentionList();
     }
   }
