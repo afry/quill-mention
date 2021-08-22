@@ -6,6 +6,7 @@ class MentionBlot extends Embed {
   constructor(scroll, node) {
     super(scroll, node);
     this.clickHandler = null;
+    this.mounted = false;
   }
 
   static create(data) {
@@ -32,21 +33,25 @@ class MentionBlot extends Embed {
 
   attach() {
     super.attach();
-    this.clickHandler = e => {
-      const event = new Event("mention-clicked", {
-        bubbles: true,
-        cancelable: true
-      });
-      event.value = Object.assign({}, this.domNode.dataset);
-      event.event = e;
-      window.dispatchEvent(event);
-      e.preventDefault();
-    };
-    this.domNode.addEventListener("click", this.clickHandler, false);
+    if (!this.mounted) {
+      this.mounted = true;
+      this.clickHandler = e => {
+        const event = new Event("mention-clicked", {
+          bubbles: true,
+          cancelable: true
+        });
+        event.value = Object.assign({}, this.domNode.dataset);
+        event.event = e;
+        window.dispatchEvent(event);
+        e.preventDefault();
+      };
+      this.domNode.addEventListener("click", this.clickHandler, false);
+    }
   }
 
   detach() {
     super.detach();
+    this.mounted = false;
     if (this.clickHandler) {
       this.domNode.removeEventListener("click", this.clickHandler);
       this.clickHandler = null;
