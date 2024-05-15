@@ -338,9 +338,11 @@
                 return;
             }
             this.options.onSelect?.(data, (asyncData, programmaticInsert = false, overriddenOptions = {}) => {
+                this.hideMentionList();
+                this.mentionList.classList.remove("loading");
                 return this.insertItem(asyncData, programmaticInsert, overriddenOptions);
             });
-            this.hideMentionList();
+            this.renderLoadingSelect();
         }
         insertItem(data, programmaticInsert, overriddenOptions = {}) {
             const render = data;
@@ -428,6 +430,20 @@
             if (loadingDiv.length > 0) {
                 loadingDiv[0].remove();
             }
+        }
+        renderLoadingSelect() {
+            if (this.itemIndex === -1) {
+                return;
+            }
+            this.mentionList.childNodes[this.itemIndex];
+            for (let i = 0; i < this.mentionList.childNodes.length; i += 1) {
+                const element = this.mentionList.childNodes[i];
+                element.classList.add("disabled");
+                element.onmouseenter = null;
+                element.onmouseup = null;
+                element.onmousedown = null;
+            }
+            this.mentionList.classList.add("loading");
         }
         renderList(mentionChar, data, searchTerm) {
             if (data && data.length > 0) {
