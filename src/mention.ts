@@ -481,6 +481,8 @@ export class Mention extends Module<MentionOption> {
     this.options.onSelect?.(
       data,
       (asyncData, programmaticInsert = false, overriddenOptions = {}) => {
+        this.hideMentionList();
+        this.mentionList.classList.remove("loading");
         return this.insertItem(
           asyncData,
           programmaticInsert,
@@ -488,7 +490,7 @@ export class Mention extends Module<MentionOption> {
         );
       }
     );
-    this.hideMentionList();
+    this.renderLoadingSelect();
   }
 
   insertItem(
@@ -607,6 +609,23 @@ export class Mention extends Module<MentionOption> {
     if (loadingDiv.length > 0) {
       loadingDiv[0].remove();
     }
+  }
+
+  renderLoadingSelect() {
+    if (this.itemIndex === -1) {
+      return;
+    }
+    const elementAtItemIndex = this.mentionList.childNodes[
+      this.itemIndex
+    ] as HTMLElement;
+    for (let i = 0; i < this.mentionList.childNodes.length; i += 1) {
+      const element = this.mentionList.childNodes[i] as HTMLElement;
+      element.classList.add("disabled");
+      element.onmouseenter = null;
+      element.onmouseup = null;
+      element.onmousedown = null;
+    }
+    this.mentionList.classList.add("loading");
   }
 
   renderList(

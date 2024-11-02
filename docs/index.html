@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
   <head>
@@ -248,6 +248,11 @@
               window.setTimeout(() => {
                 renderList(matches, searchTerm);
               }, 1000);
+            },
+            onSelect: (item, insertItem) => {
+              setTimeout(() => {
+                insertItem(item);
+              }, 2000);
             },
             dataAttributes: [
               "id",
